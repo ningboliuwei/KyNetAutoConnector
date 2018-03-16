@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -14,9 +14,7 @@ namespace KyNetAutoConnector
 {
     public partial class frmMain : Form
     {
-        private readonly string _baseUrl = "http://www.baidu.com";
         private readonly string _configPath = Path.Combine(Application.StartupPath, "config.xml");
-        private readonly string _initialUrl = "http://10.22.115.123";
         private readonly InputSimulator _inputSimulator = new InputSimulator();
 
         public frmMain()
@@ -38,10 +36,10 @@ namespace KyNetAutoConnector
 
         private void AutoConnect(int interval)
         {
-            var registry = new Registry();
-
             if (interval != 0)
             {
+                var registry = new Registry();
+
                 registry.Schedule(() =>
                 {
                     if (IsOffline()) AutoLogin();
@@ -96,23 +94,27 @@ namespace KyNetAutoConnector
 
         private bool IsOffline()
         {
+            const string baseHost = "www.baidu.com";
+
+            var ping = new Ping();
+
             try
             {
-                using (var client = new WebClient())
-                {
-                    client.DownloadString(_baseUrl);
-                    return false;
-                }
+                var reply = ping.Send(baseHost, 1000);
+                if (reply != null && reply.Status == IPStatus.Success) return false;
             }
             catch
             {
-                return true;
+                // ignored
             }
+
+            return true;
         }
 
         private void LoadSettings()
         {
             var serializer = new XmlSerializer(typeof(Settings));
+            const string initialUrl = "http://10.22.115.123";
 
             StreamReader reader = null;
             try
@@ -120,9 +122,8 @@ namespace KyNetAutoConnector
                 if (File.Exists(_configPath))
                 {
                     reader = new StreamReader(_configPath);
-                    var settings = serializer.Deserialize(reader) as Settings;
 
-                    if (settings != null)
+                    if (serializer.Deserialize(reader) is Settings settings)
                     {
                         txtUrl.Text = settings.Url;
                         txtUsername.Text = settings.Username;
@@ -133,7 +134,7 @@ namespace KyNetAutoConnector
                 }
                 else
                 {
-                    txtUrl.Text = _initialUrl;
+                    txtUrl.Text = initialUrl;
                 }
             }
             catch (Exception ex)
@@ -222,10 +223,6 @@ namespace KyNetAutoConnector
             WindowState = FormWindowState.Normal;
         }
 
-        private void trayIcon_Click(object sender, EventArgs e)
-        {
-        }
-
         private void frmMain_SizeChanged(object sender, EventArgs e)
         {
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
@@ -234,6 +231,13 @@ namespace KyNetAutoConnector
         private void trayIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left) WindowState = FormWindowState.Normal;
+        }
+
+        private void lnkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var helpUrl = "https://github.com/ningboliuwei/KyNetAutoConnector/blob/master/README.md";
+
+            Process.Start(helpUrl);
         }
 
         [Serializable]
@@ -246,10 +250,10 @@ namespace KyNetAutoConnector
             public int AutoReconnectInterval { get; set; }
         }
 
-        private void lnkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkOpenStartupFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            var helpUrl = "https://github.com/ningboliuwei/KyNetAutoConnector/blob/master/README.md";
-            Process.Start(helpUrl);
+            var userStartupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            Process.Start(userStartupFolder);
         }
     }
 }

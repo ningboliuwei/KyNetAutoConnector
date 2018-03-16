@@ -42,12 +42,13 @@
             this.chkRunWhenStartup = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.updnReconnect = new System.Windows.Forms.NumericUpDown();
+            this.lnkHelp = new System.Windows.Forms.LinkLabel();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.lnkHelp = new System.Windows.Forms.LinkLabel();
+            this.lnkOpenStartupFolder = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).BeginInit();
@@ -58,7 +59,7 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.txtUrl, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtUsername, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.txtPassword, 1, 2);
@@ -76,7 +77,8 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 185);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(616, 169);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txtUrl
@@ -87,8 +89,8 @@
             this.txtUrl.Location = new System.Drawing.Point(83, 3);
             this.txtUrl.MaxLength = 50;
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(478, 21);
-            this.txtUrl.TabIndex = 0;
+            this.txtUrl.Size = new System.Drawing.Size(530, 21);
+            this.txtUrl.TabIndex = 6;
             // 
             // txtUsername
             // 
@@ -98,7 +100,7 @@
             this.txtUsername.Location = new System.Drawing.Point(83, 33);
             this.txtUsername.MaxLength = 7;
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(478, 21);
+            this.txtUsername.Size = new System.Drawing.Size(530, 21);
             this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
@@ -110,7 +112,7 @@
             this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(478, 21);
+            this.txtPassword.Size = new System.Drawing.Size(530, 21);
             this.txtPassword.TabIndex = 0;
             // 
             // label1
@@ -153,7 +155,7 @@
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(3, 123);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(558, 59);
+            this.btnRun.Size = new System.Drawing.Size(610, 43);
             this.btnRun.TabIndex = 4;
             this.btnRun.Text = "连接(&C)";
             this.btnRun.UseVisualStyleBackColor = false;
@@ -163,13 +165,14 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.flowLayoutPanel1, 2);
             this.flowLayoutPanel1.Controls.Add(this.chkRunWhenStartup);
+            this.flowLayoutPanel1.Controls.Add(this.lnkOpenStartupFolder);
             this.flowLayoutPanel1.Controls.Add(this.label4);
             this.flowLayoutPanel1.Controls.Add(this.updnReconnect);
             this.flowLayoutPanel1.Controls.Add(this.lnkHelp);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 93);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(558, 24);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(610, 24);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // chkRunWhenStartup
@@ -188,7 +191,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(141, 0);
+            this.label4.Location = new System.Drawing.Point(236, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(251, 27);
             this.label4.TabIndex = 2;
@@ -197,7 +200,7 @@
             // 
             // updnReconnect
             // 
-            this.updnReconnect.Location = new System.Drawing.Point(398, 3);
+            this.updnReconnect.Location = new System.Drawing.Point(493, 3);
             this.updnReconnect.Name = "updnReconnect";
             this.updnReconnect.Size = new System.Drawing.Size(64, 21);
             this.updnReconnect.TabIndex = 1;
@@ -207,13 +210,25 @@
             0,
             0});
             // 
+            // lnkHelp
+            // 
+            this.lnkHelp.AutoSize = true;
+            this.lnkHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkHelp.Location = new System.Drawing.Point(563, 0);
+            this.lnkHelp.Name = "lnkHelp";
+            this.lnkHelp.Size = new System.Drawing.Size(29, 27);
+            this.lnkHelp.TabIndex = 3;
+            this.lnkHelp.TabStop = true;
+            this.lnkHelp.Text = "帮助";
+            this.lnkHelp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHelp_LinkClicked);
+            // 
             // trayIcon
             // 
             this.trayIcon.ContextMenuStrip = this.trayMenu;
             this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
             this.trayIcon.Text = "科院外网自动连接器";
             this.trayIcon.Visible = true;
-            this.trayIcon.Click += new System.EventHandler(this.trayIcon_Click);
             this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
             // 
             // trayMenu
@@ -244,25 +259,25 @@
             this.toolStripMenuItemExit.Text = "退出(&X)";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
-            // lnkHelp
+            // lnkOpenStartupFolder
             // 
-            this.lnkHelp.AutoSize = true;
-            this.lnkHelp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lnkHelp.Location = new System.Drawing.Point(468, 0);
-            this.lnkHelp.Name = "lnkHelp";
-            this.lnkHelp.Size = new System.Drawing.Size(29, 27);
-            this.lnkHelp.TabIndex = 3;
-            this.lnkHelp.TabStop = true;
-            this.lnkHelp.Text = "帮助";
-            this.lnkHelp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHelp_LinkClicked);
+            this.lnkOpenStartupFolder.AutoSize = true;
+            this.lnkOpenStartupFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkOpenStartupFolder.Location = new System.Drawing.Point(141, 0);
+            this.lnkOpenStartupFolder.Name = "lnkOpenStartupFolder";
+            this.lnkOpenStartupFolder.Size = new System.Drawing.Size(89, 27);
+            this.lnkOpenStartupFolder.TabIndex = 4;
+            this.lnkOpenStartupFolder.TabStop = true;
+            this.lnkOpenStartupFolder.Text = "打开启动文件夹";
+            this.lnkOpenStartupFolder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkOpenStartupFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenStartupFolder_LinkClicked);
             // 
             // frmMain
             // 
             this.AcceptButton = this.btnRun;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 185);
+            this.ClientSize = new System.Drawing.Size(616, 169);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -286,7 +301,6 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox txtUrl;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label1;
@@ -303,6 +317,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.LinkLabel lnkHelp;
+        private System.Windows.Forms.TextBox txtUrl;
+        private System.Windows.Forms.LinkLabel lnkOpenStartupFolder;
     }
 }
 

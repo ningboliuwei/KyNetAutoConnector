@@ -14,7 +14,7 @@ namespace KyNetAutoConnector
 {
     public partial class frmMain : Form
     {
-        private readonly string _baseUrl = "www.baidu.com";
+        private readonly string _baseUrl = "http://www.baidu.com";
         private readonly string _configPath = Path.Combine(Application.StartupPath, "config.xml");
         private readonly string _initialUrl = "http://10.22.115.123";
         private readonly InputSimulator _inputSimulator = new InputSimulator();
@@ -26,7 +26,18 @@ namespace KyNetAutoConnector
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            var interval = Convert.ToInt32(updnReconnect.Value);
+            if (!IsOffline())
+            {
+                MessageBox.Show("当前已联网，不进行自动连接", "注意", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            AutoConnect(Convert.ToInt32(updnReconnect.Value));
+        }
+
+        private void AutoConnect(int interval)
+        {
             var registry = new Registry();
 
             if (interval != 0)
@@ -42,7 +53,7 @@ namespace KyNetAutoConnector
             }
         }
 
-        public void AutoLogin()
+        private void AutoLogin()
         {
             var url = txtUrl.Text.Trim();
 
@@ -57,7 +68,7 @@ namespace KyNetAutoConnector
             CloseBrowser();
         }
 
-        public void InputData(string data)
+        private void InputData(string data)
         {
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_A); //全选当前输入框
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.DELETE);
@@ -65,25 +76,25 @@ namespace KyNetAutoConnector
             _inputSimulator.Keyboard.Sleep(50);
         }
 
-        public void InputTab()
+        private void InputTab()
         {
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.TAB);
             _inputSimulator.Keyboard.Sleep(50);
         }
 
-        public void InputEnter()
+        private void InputEnter()
         {
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
             _inputSimulator.Keyboard.Sleep(50);
         }
 
-        public void CloseBrowser()
+        private void CloseBrowser()
         {
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_W);
             _inputSimulator.Keyboard.Sleep(50);
         }
 
-        public bool IsOffline()
+        private bool IsOffline()
         {
             try
             {
@@ -99,7 +110,7 @@ namespace KyNetAutoConnector
             }
         }
 
-        public void LoadSettings()
+        private void LoadSettings()
         {
             var serializer = new XmlSerializer(typeof(Settings));
 
@@ -135,7 +146,7 @@ namespace KyNetAutoConnector
             }
         }
 
-        public void SaveSettigns()
+        private void SaveSettigns()
         {
             var settings = new Settings
             {
@@ -174,7 +185,7 @@ namespace KyNetAutoConnector
         private void frmMain_Load(object sender, EventArgs e)
         {
             LoadSettings();
-            btnRun_Click(null, null);
+            AutoConnect(Convert.ToInt32(updnReconnect.Value));
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)

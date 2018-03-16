@@ -43,10 +43,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.updnReconnect = new System.Windows.Forms.NumericUpDown();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).BeginInit();
@@ -213,20 +213,6 @@
             this.trayIcon.Click += new System.EventHandler(this.trayIcon_Click);
             this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
             // 
-            // toolStripMenuItemShow
-            // 
-            this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
-            this.toolStripMenuItemShow.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemShow.Text = "还原(&R)";
-            this.toolStripMenuItemShow.Click += new System.EventHandler(this.toolStripMenuItemShow_Click);
-            // 
-            // toolStripMenuItemExit
-            // 
-            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
-            this.toolStripMenuItemExit.Text = "退出(&X)";
-            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
-            // 
             // trayMenu
             // 
             this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -234,21 +220,37 @@
             this.toolStripSeparator1,
             this.toolStripMenuItemExit});
             this.trayMenu.Name = "trayMenu";
-            this.trayMenu.Size = new System.Drawing.Size(181, 76);
+            this.trayMenu.Size = new System.Drawing.Size(117, 54);
+            // 
+            // toolStripMenuItemShow
+            // 
+            this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
+            this.toolStripMenuItemShow.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemShow.Text = "还原(&R)";
+            this.toolStripMenuItemShow.Click += new System.EventHandler(this.toolStripMenuItemShow_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            // 
+            // toolStripMenuItemExit
+            // 
+            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemExit.Text = "退出(&X)";
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
             // frmMain
             // 
+            this.AcceptButton = this.btnRun;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(485, 185);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "科院外网自动连接器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);

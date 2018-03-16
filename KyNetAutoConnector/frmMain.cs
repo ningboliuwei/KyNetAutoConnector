@@ -17,6 +17,7 @@ namespace KyNetAutoConnector
         private readonly string _configPath = Path.Combine(Application.StartupPath, "config.xml");
         private readonly InputSimulator _inputSimulator = new InputSimulator();
 
+
         public frmMain()
         {
             InitializeComponent();
@@ -31,24 +32,13 @@ namespace KyNetAutoConnector
                 return;
             }
 
-            AutoConnect(Convert.ToInt32(updnReconnect.Value));
+            AutoConnect();
         }
 
-        private void AutoConnect(int interval)
+        private void AutoConnect()
         {
-            if (interval != 0)
-            {
-                var registry = new Registry();
-
-                registry.Schedule(() =>
-                {
-                    if (IsOffline()) AutoLogin();
-                }).ToRunNow().AndEvery(interval).Minutes();
-            }
-            else
-            {
-                if (IsOffline()) AutoLogin();
-            }
+            if (IsOffline())
+                AutoLogin();
         }
 
         private void AutoLogin()
@@ -56,7 +46,7 @@ namespace KyNetAutoConnector
             var url = txtUrl.Text.Trim();
 
             Process.Start(url);
-            Thread.Sleep(3000);
+            Thread.Sleep(10000);
             InputTab();
             InputData(txtUsername.Text.Trim());
             InputTab();
@@ -115,8 +105,8 @@ namespace KyNetAutoConnector
         {
             var serializer = new XmlSerializer(typeof(Settings));
             const string initialUrl = "http://10.22.115.123";
-
             StreamReader reader = null;
+
             try
             {
                 if (File.Exists(_configPath))
@@ -186,7 +176,8 @@ namespace KyNetAutoConnector
         private void frmMain_Load(object sender, EventArgs e)
         {
             LoadSettings();
-            AutoConnect(Convert.ToInt32(updnReconnect.Value));
+
+            SetAutoConnectSchedule(Convert.ToInt32(updnReconnect.Value));
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -240,6 +231,27 @@ namespace KyNetAutoConnector
             Process.Start(helpUrl);
         }
 
+        private void lnkOpenStartupFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var userStartupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            Process.Start(userStartupFolder);
+        }
+
+        private void updnReconnect_ValueChanged(object sender, EventArgs e)
+        {
+            SetAutoConnectSchedule(Convert.ToInt32(updnReconnect.Value));
+        }
+
+        private void SetAutoConnectSchedule(int interval)
+        {
+            JobManager.RemoveAllJobs();
+
+            if (interval != 0)
+                JobManager.AddJob(AutoConnect, s => s.ToRunEvery(interval).Minutes());
+            else
+                JobManager.Stop();
+        }
+
         [Serializable]
         public class Settings
         {
@@ -248,12 +260,6 @@ namespace KyNetAutoConnector
             public string Password { get; set; }
             public bool RunWhenStartup { get; set; }
             public int AutoReconnectInterval { get; set; }
-        }
-
-        private void lnkOpenStartupFolder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            var userStartupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-            Process.Start(userStartupFolder);
         }
     }
 }

@@ -40,6 +40,7 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.chkRunWhenStartup = new System.Windows.Forms.CheckBox();
+            this.lnkOpenStartupFolder = new System.Windows.Forms.LinkLabel();
             this.label4 = new System.Windows.Forms.Label();
             this.updnReconnect = new System.Windows.Forms.NumericUpDown();
             this.lnkHelp = new System.Windows.Forms.LinkLabel();
@@ -48,7 +49,6 @@
             this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.lnkOpenStartupFolder = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).BeginInit();
@@ -187,6 +187,19 @@
             this.chkRunWhenStartup.UseVisualStyleBackColor = true;
             this.chkRunWhenStartup.CheckedChanged += new System.EventHandler(this.chkRunWhenStartup_CheckedChanged);
             // 
+            // lnkOpenStartupFolder
+            // 
+            this.lnkOpenStartupFolder.AutoSize = true;
+            this.lnkOpenStartupFolder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkOpenStartupFolder.Location = new System.Drawing.Point(141, 0);
+            this.lnkOpenStartupFolder.Name = "lnkOpenStartupFolder";
+            this.lnkOpenStartupFolder.Size = new System.Drawing.Size(89, 27);
+            this.lnkOpenStartupFolder.TabIndex = 4;
+            this.lnkOpenStartupFolder.TabStop = true;
+            this.lnkOpenStartupFolder.Text = "打开启动文件夹";
+            this.lnkOpenStartupFolder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkOpenStartupFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenStartupFolder_LinkClicked);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -209,6 +222,7 @@
             0,
             0,
             0});
+            this.updnReconnect.ValueChanged += new System.EventHandler(this.updnReconnect_ValueChanged);
             // 
             // lnkHelp
             // 
@@ -258,19 +272,6 @@
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItemExit.Text = "退出(&X)";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
-            // 
-            // lnkOpenStartupFolder
-            // 
-            this.lnkOpenStartupFolder.AutoSize = true;
-            this.lnkOpenStartupFolder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lnkOpenStartupFolder.Location = new System.Drawing.Point(141, 0);
-            this.lnkOpenStartupFolder.Name = "lnkOpenStartupFolder";
-            this.lnkOpenStartupFolder.Size = new System.Drawing.Size(89, 27);
-            this.lnkOpenStartupFolder.TabIndex = 4;
-            this.lnkOpenStartupFolder.TabStop = true;
-            this.lnkOpenStartupFolder.Text = "打开启动文件夹";
-            this.lnkOpenStartupFolder.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lnkOpenStartupFolder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOpenStartupFolder_LinkClicked);
             // 
             // frmMain
             // 

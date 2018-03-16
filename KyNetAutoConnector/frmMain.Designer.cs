@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.txtUsername = new System.Windows.Forms.TextBox();
@@ -38,11 +40,17 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.chkRunWhenStartup = new System.Windows.Forms.CheckBox();
-            this.updnReconnect = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
+            this.updnReconnect = new System.Windows.Forms.NumericUpDown();
+            this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).BeginInit();
+            this.trayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -67,7 +75,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(356, 165);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(485, 185);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txtUrl
@@ -76,10 +84,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUrl.Location = new System.Drawing.Point(83, 3);
+            this.txtUrl.MaxLength = 50;
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(270, 21);
+            this.txtUrl.Size = new System.Drawing.Size(399, 21);
             this.txtUrl.TabIndex = 0;
-            this.txtUrl.Text = "http://10.22.115.123";
             // 
             // txtUsername
             // 
@@ -87,10 +95,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(83, 33);
+            this.txtUsername.MaxLength = 7;
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(270, 21);
+            this.txtUsername.Size = new System.Drawing.Size(399, 21);
             this.txtUsername.TabIndex = 0;
-            this.txtUsername.Text = "0428204";
             // 
             // txtPassword
             // 
@@ -98,10 +106,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPassword.Location = new System.Drawing.Point(83, 63);
+            this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(270, 21);
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(399, 21);
             this.txtPassword.TabIndex = 0;
-            this.txtPassword.Text = "291019";
             // 
             // label1
             // 
@@ -142,9 +151,9 @@
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(3, 123);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(350, 39);
+            this.btnRun.Size = new System.Drawing.Size(479, 59);
             this.btnRun.TabIndex = 4;
-            this.btnRun.Text = "开始(&R)";
+            this.btnRun.Text = "连接(&C)";
             this.btnRun.UseVisualStyleBackColor = true;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
@@ -157,7 +166,7 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 93);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(350, 24);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(479, 24);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // chkRunWhenStartup
@@ -170,10 +179,22 @@
             this.chkRunWhenStartup.TabIndex = 0;
             this.chkRunWhenStartup.Text = "系统启动时自动运行";
             this.chkRunWhenStartup.UseVisualStyleBackColor = true;
+            this.chkRunWhenStartup.CheckedChanged += new System.EventHandler(this.chkRunWhenStartup_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(141, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(251, 27);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "自动重连间隔（分钟）/ 设为 0 则不自动重连";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // updnReconnect
             // 
-            this.updnReconnect.Location = new System.Drawing.Point(272, 3);
+            this.updnReconnect.Location = new System.Drawing.Point(398, 3);
             this.updnReconnect.Name = "updnReconnect";
             this.updnReconnect.Size = new System.Drawing.Size(64, 21);
             this.updnReconnect.TabIndex = 1;
@@ -183,31 +204,62 @@
             0,
             0});
             // 
-            // label4
+            // trayIcon
             // 
-            this.label4.AutoSize = true;
-            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(141, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(125, 27);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "自动重连间隔（分钟）";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.trayIcon.ContextMenuStrip = this.trayMenu;
+            this.trayIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("trayIcon.Icon")));
+            this.trayIcon.Text = "科院外网自动连接器";
+            this.trayIcon.Visible = true;
+            this.trayIcon.Click += new System.EventHandler(this.trayIcon_Click);
+            this.trayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.trayIcon_MouseClick);
+            // 
+            // toolStripMenuItemShow
+            // 
+            this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
+            this.toolStripMenuItemShow.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemShow.Text = "还原(&R)";
+            this.toolStripMenuItemShow.Click += new System.EventHandler(this.toolStripMenuItemShow_Click);
+            // 
+            // toolStripMenuItemExit
+            // 
+            this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItemExit.Text = "退出(&X)";
+            this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
+            // 
+            // trayMenu
+            // 
+            this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemShow,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemExit});
+            this.trayMenu.Name = "trayMenu";
+            this.trayMenu.Size = new System.Drawing.Size(181, 76);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 165);
+            this.ClientSize = new System.Drawing.Size(485, 185);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.Text = "科院外网自动连接器";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmMain_FormClosed);
+            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.SizeChanged += new System.EventHandler(this.frmMain_SizeChanged);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).EndInit();
+            this.trayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -226,6 +278,11 @@
         private System.Windows.Forms.CheckBox chkRunWhenStartup;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown updnReconnect;
+        private System.Windows.Forms.NotifyIcon trayIcon;
+        private System.Windows.Forms.ContextMenuStrip trayMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShow;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

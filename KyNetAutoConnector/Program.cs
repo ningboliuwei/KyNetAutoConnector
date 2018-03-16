@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace KyNetAutoConnector
@@ -13,9 +14,19 @@ namespace KyNetAutoConnector
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            bool createNew;
+            using (new Mutex(true, Application.ProductName, out createNew))
+            {
+                if (createNew)
+                {
+                    Application.Run(new frmMain());
+                }
+                else
+                {
+                    Thread.Sleep(1000);
+                    Environment.Exit(1);
+                }
+            }
         }
     }
 }

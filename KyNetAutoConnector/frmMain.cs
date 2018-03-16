@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Security.Policy;
-using System.Text;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using WindowsInput;
 using WindowsInput.Native;
-using System.Runtime.Serialization;
-using System.Xml.Serialization;
+using AutostartManagement;
+using FluentScheduler;
 
 namespace KyNetAutoConnector
 {
     public partial class frmMain : Form
     {
-        private InputSimulator _inputSimulator = new InputSimulator();
-        private string _configPath = Path.Combine(Application.ExecutablePath, "config.xml");
+        private readonly string _baseUrl = "www.baidu.com";
+        private readonly string _configPath = Path.Combine(Application.StartupPath, "config.xml");
+        private readonly string _initialUrl = "http://10.22.115.123";
+        private readonly InputSimulator _inputSimulator = new InputSimulator();
 
         public frmMain()
         {
@@ -29,9 +26,19 @@ namespace KyNetAutoConnector
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            if (IsOffline())
+            var interval = Convert.ToInt32(updnReconnect.Value);
+            var registry = new Registry();
+
+            if (interval != 0)
             {
-                AutoLogin();
+                registry.Schedule(() =>
+                {
+                    if (IsOffline()) AutoLogin();
+                }).ToRunNow().AndEvery(interval).Minutes();
+            }
+            else
+            {
+                if (IsOffline()) AutoLogin();
             }
         }
 
@@ -39,7 +46,7 @@ namespace KyNetAutoConnector
         {
             var url = txtUrl.Text.Trim();
 
-            System.Diagnostics.Process.Start(url);
+            Process.Start(url);
             Thread.Sleep(3000);
             InputTab();
             InputData(txtUsername.Text.Trim());
@@ -78,24 +85,59 @@ namespace KyNetAutoConnector
 
         public bool IsOffline()
         {
-            var ping = new Ping();
-            var reply = ping.Send("www.baidu.com", 1000);//百度IP
-            if (reply != null && reply.Status == IPStatus.Success)
+            try
             {
-                return false;
+                using (var client = new WebClient())
+                {
+                    client.DownloadString(_baseUrl);
+                    return false;
+                }
             }
-
-            return true;
+            catch
+            {
+                return true;
+            }
         }
 
         public void LoadSettings()
         {
+            var serializer = new XmlSerializer(typeof(Settings));
 
+            StreamReader reader = null;
+            try
+            {
+                if (File.Exists(_configPath))
+                {
+                    reader = new StreamReader(_configPath);
+                    var settings = serializer.Deserialize(reader) as Settings;
+
+                    if (settings != null)
+                    {
+                        txtUrl.Text = settings.Url;
+                        txtUsername.Text = settings.Username;
+                        txtPassword.Text = settings.Password;
+                        chkRunWhenStartup.Checked = settings.RunWhenStartup;
+                        updnReconnect.Value = settings.AutoReconnectInterval;
+                    }
+                }
+                else
+                {
+                    txtUrl.Text = _initialUrl;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                reader?.Close();
+            }
         }
 
         public void SaveSettigns()
         {
-            var settings = new Settings()
+            var settings = new Settings
             {
                 Url = txtUrl.Text.Trim(),
                 Username = txtUsername.Text.Trim(),
@@ -105,8 +147,82 @@ namespace KyNetAutoConnector
             };
 
             var serializer = new XmlSerializer(typeof(Settings));
-            var writer = new StreamWriter(_configPath);
-            serializer.Serialize(writer, settings);
+            StreamWriter writer = null;
+
+            try
+            {
+                if (!File.Exists(_configPath)) File.Create(_configPath);
+
+                writer = new StreamWriter(_configPath);
+                serializer.Serialize(writer, settings);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                writer?.Close();
+            }
+        }
+
+        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SaveSettigns();
+        }
+
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            LoadSettings();
+            btnRun_Click(null, null);
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show(this, "确定退出程序吗?", "问题", MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button2) == DialogResult.No)
+                e.Cancel = true;
+        }
+
+        private void chkRunWhenStartup_CheckedChanged(object sender, EventArgs e)
+        {
+            var autostartEnabled = chkRunWhenStartup.Checked;
+            const bool registerShortcutForAllUser = false;
+            var autostartManager = new AutostartManager(Application.ProductName, Application.ExecutablePath,
+                registerShortcutForAllUser);
+
+            if (autostartEnabled)
+            {
+                if (!autostartManager.IsAutostartEnabled()) autostartManager.EnableAutostart();
+            }
+            else
+            {
+                if (autostartManager.IsAutostartEnabled()) autostartManager.DisableAutostart();
+            }
+        }
+
+        private void toolStripMenuItemExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void toolStripMenuItemShow_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
+        }
+
+        private void trayIcon_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void frmMain_SizeChanged(object sender, EventArgs e)
+        {
+            ShowInTaskbar = WindowState != FormWindowState.Minimized;
+        }
+
+        private void trayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left) WindowState = FormWindowState.Normal;
         }
 
         [Serializable]
@@ -117,11 +233,6 @@ namespace KyNetAutoConnector
             public string Password { get; set; }
             public bool RunWhenStartup { get; set; }
             public int AutoReconnectInterval { get; set; }
-        }
-
-        private void frmMain_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            SaveSettigns();
         }
     }
 }

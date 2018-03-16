@@ -47,6 +47,7 @@
             this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.lnkHelp = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.updnReconnect)).BeginInit();
@@ -75,7 +76,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(485, 185);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(564, 185);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txtUrl
@@ -86,7 +87,7 @@
             this.txtUrl.Location = new System.Drawing.Point(83, 3);
             this.txtUrl.MaxLength = 50;
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(399, 21);
+            this.txtUrl.Size = new System.Drawing.Size(478, 21);
             this.txtUrl.TabIndex = 0;
             // 
             // txtUsername
@@ -97,7 +98,7 @@
             this.txtUsername.Location = new System.Drawing.Point(83, 33);
             this.txtUsername.MaxLength = 7;
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(399, 21);
+            this.txtUsername.Size = new System.Drawing.Size(478, 21);
             this.txtUsername.TabIndex = 0;
             // 
             // txtPassword
@@ -109,7 +110,7 @@
             this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(399, 21);
+            this.txtPassword.Size = new System.Drawing.Size(478, 21);
             this.txtPassword.TabIndex = 0;
             // 
             // label1
@@ -147,14 +148,15 @@
             // 
             // btnRun
             // 
+            this.btnRun.BackColor = System.Drawing.Color.PaleGreen;
             this.tableLayoutPanel1.SetColumnSpan(this.btnRun, 2);
             this.btnRun.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnRun.Location = new System.Drawing.Point(3, 123);
             this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(479, 59);
+            this.btnRun.Size = new System.Drawing.Size(558, 59);
             this.btnRun.TabIndex = 4;
             this.btnRun.Text = "连接(&C)";
-            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.UseVisualStyleBackColor = false;
             this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // flowLayoutPanel1
@@ -163,10 +165,11 @@
             this.flowLayoutPanel1.Controls.Add(this.chkRunWhenStartup);
             this.flowLayoutPanel1.Controls.Add(this.label4);
             this.flowLayoutPanel1.Controls.Add(this.updnReconnect);
+            this.flowLayoutPanel1.Controls.Add(this.lnkHelp);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 93);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(479, 24);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(558, 24);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // chkRunWhenStartup
@@ -241,13 +244,27 @@
             this.toolStripMenuItemExit.Text = "退出(&X)";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
+            // lnkHelp
+            // 
+            this.lnkHelp.AutoSize = true;
+            this.lnkHelp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lnkHelp.Location = new System.Drawing.Point(468, 0);
+            this.lnkHelp.Name = "lnkHelp";
+            this.lnkHelp.Size = new System.Drawing.Size(29, 27);
+            this.lnkHelp.TabIndex = 3;
+            this.lnkHelp.TabStop = true;
+            this.lnkHelp.Text = "帮助";
+            this.lnkHelp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnkHelp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHelp_LinkClicked);
+            // 
             // frmMain
             // 
             this.AcceptButton = this.btnRun;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 185);
+            this.ClientSize = new System.Drawing.Size(564, 185);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -285,6 +302,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemShow;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemExit;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.LinkLabel lnkHelp;
     }
 }
 

@@ -245,5 +245,11 @@ namespace KyNetAutoConnector
             public bool RunWhenStartup { get; set; }
             public int AutoReconnectInterval { get; set; }
         }
+
+        private void lnkHelp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var helpUrl = "https://github.com/ningboliuwei/KyNetAutoConnector/blob/master/README.md";
+            Process.Start(helpUrl);
+        }
     }
 }

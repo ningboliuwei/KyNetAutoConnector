@@ -37,8 +37,12 @@ namespace KyNetAutoConnector
 
         private void AutoConnect()
         {
-            if (IsOffline())
-                AutoLogin();
+            if (AutoClosingMessageBox.Show("10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
+                    DialogResult.No) == DialogResult.No)
+            {
+                if (IsOffline())
+                    AutoLogin();
+            }
         }
 
         private void AutoLogin()

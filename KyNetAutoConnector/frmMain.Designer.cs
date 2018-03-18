@@ -46,6 +46,7 @@
             this.lnkHelp = new System.Windows.Forms.LinkLabel();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemShow = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -248,28 +249,36 @@
             // trayMenu
             // 
             this.trayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemConnect,
             this.toolStripMenuItemShow,
             this.toolStripSeparator1,
             this.toolStripMenuItemExit});
             this.trayMenu.Name = "trayMenu";
-            this.trayMenu.Size = new System.Drawing.Size(117, 54);
+            this.trayMenu.Size = new System.Drawing.Size(114, 76);
+            // 
+            // toolStripMenuItemConnect
+            // 
+            this.toolStripMenuItemConnect.Name = "toolStripMenuItemConnect";
+            this.toolStripMenuItemConnect.Size = new System.Drawing.Size(113, 22);
+            this.toolStripMenuItemConnect.Text = "连接";
+            this.toolStripMenuItemConnect.Click += new System.EventHandler(this.toolStripMenuItemConnect_Click);
             // 
             // toolStripMenuItemShow
             // 
             this.toolStripMenuItemShow.Name = "toolStripMenuItemShow";
-            this.toolStripMenuItemShow.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemShow.Size = new System.Drawing.Size(113, 22);
             this.toolStripMenuItemShow.Text = "还原(&R)";
             this.toolStripMenuItemShow.Click += new System.EventHandler(this.toolStripMenuItemShow_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(113, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(110, 6);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 22);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(113, 22);
             this.toolStripMenuItemExit.Text = "退出(&X)";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
@@ -320,6 +329,7 @@
         private System.Windows.Forms.LinkLabel lnkHelp;
         private System.Windows.Forms.TextBox txtUrl;
         private System.Windows.Forms.LinkLabel lnkOpenStartupFolder;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemConnect;
     }
 }
 

@@ -37,11 +37,13 @@ namespace KyNetAutoConnector
 
         private void AutoConnect()
         {
-            if (AutoClosingMessageBox.Show("10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
-                    DialogResult.No) == DialogResult.No)
+            if (IsOffline())
             {
-                if (IsOffline())
+                if (AutoClosingMessageBox.Show("10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
+                        DialogResult.No) == DialogResult.No)
+                {
                     AutoLogin();
+                }
             }
         }
 
@@ -50,7 +52,7 @@ namespace KyNetAutoConnector
             var url = txtUrl.Text.Trim();
 
             Process.Start(url);
-            Thread.Sleep(10000);
+            Thread.Sleep(5000);
             InputTab();
             InputData(txtUsername.Text.Trim());
             InputTab();
@@ -129,6 +131,7 @@ namespace KyNetAutoConnector
                 else
                 {
                     txtUrl.Text = initialUrl;
+                    SaveSettigns();
                 }
             }
             catch (Exception ex)
@@ -157,8 +160,6 @@ namespace KyNetAutoConnector
 
             try
             {
-                if (!File.Exists(_configPath)) File.Create(_configPath);
-
                 writer = new StreamWriter(_configPath);
                 serializer.Serialize(writer, settings);
             }
@@ -264,6 +265,11 @@ namespace KyNetAutoConnector
             public string Password { get; set; }
             public bool RunWhenStartup { get; set; }
             public int AutoReconnectInterval { get; set; }
+        }
+
+        private void toolStripMenuItemConnect_Click(object sender, EventArgs e)
+        {
+            btnRun_Click(null, null);
         }
     }
 }

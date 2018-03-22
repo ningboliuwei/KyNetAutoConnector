@@ -39,13 +39,11 @@ namespace KyNetAutoConnector
         {
             if (IsOffline())
             {
-                this.Activate();
-                if (AutoClosingMessageBox.Show("10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
+                WindowState = FormWindowState.Normal;
+                Activate();
+                if (AutoClosingMessageBox.Show(this, "10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
                         DialogResult.No) == DialogResult.No)
-                {
-                    if (IsOffline())
-                        AutoLogin();
-                }
+                    AutoLogin();
             }
         }
 
@@ -62,12 +60,12 @@ namespace KyNetAutoConnector
             InputEnter();
             Thread.Sleep(3000);
             CloseBrowser();
+            WindowState = FormWindowState.Minimized;
         }
 
         private void InputData(string data)
         {
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_A); //全选当前输入框
-//            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
             _inputSimulator.Keyboard.TextEntry(data);
             _inputSimulator.Keyboard.Sleep(50);
         }
@@ -93,13 +91,18 @@ namespace KyNetAutoConnector
         private bool IsOffline()
         {
             const string baseHost = "www.baidu.com";
+            const int pingCount = 4;
 
             var ping = new Ping();
 
             try
             {
-                var reply = ping.Send(baseHost, 1000);
-                if (reply != null && reply.Status == IPStatus.Success) return false;
+                for (var i = 0; i < pingCount; i++)
+                {
+                    var reply = ping.Send(baseHost, 2000);
+
+                    if (reply != null && reply.Status == IPStatus.Success) return false;
+                }
             }
             catch
             {
@@ -259,6 +262,11 @@ namespace KyNetAutoConnector
                 JobManager.Stop();
         }
 
+        private void toolStripMenuItemConnect_Click(object sender, EventArgs e)
+        {
+            btnRun_Click(null, null);
+        }
+
         [Serializable]
         public class Settings
         {
@@ -267,11 +275,6 @@ namespace KyNetAutoConnector
             public string Password { get; set; }
             public bool RunWhenStartup { get; set; }
             public int AutoReconnectInterval { get; set; }
-        }
-
-        private void toolStripMenuItemConnect_Click(object sender, EventArgs e)
-        {
-            btnRun_Click(null, null);
         }
     }
 }

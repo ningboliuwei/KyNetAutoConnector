@@ -39,10 +39,12 @@ namespace KyNetAutoConnector
         {
             if (IsOffline())
             {
+                this.Activate();
                 if (AutoClosingMessageBox.Show("10 秒后开始自动连接，是否需要取消操作？", "问题", 5000, MessageBoxButtons.YesNo,
                         DialogResult.No) == DialogResult.No)
                 {
-                    AutoLogin();
+                    if (IsOffline())
+                        AutoLogin();
                 }
             }
         }
@@ -65,7 +67,7 @@ namespace KyNetAutoConnector
         private void InputData(string data)
         {
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.CONTROL, VirtualKeyCode.VK_A); //全选当前输入框
-            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.DELETE);
+//            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.BACK);
             _inputSimulator.Keyboard.TextEntry(data);
             _inputSimulator.Keyboard.Sleep(50);
         }
